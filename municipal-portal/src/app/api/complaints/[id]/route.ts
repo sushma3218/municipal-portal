@@ -83,7 +83,9 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
       newStatus = 'REJECTED';
     } else if (user.role === 'DEPT_HEAD' && action === 'ASSIGN') {
       const staff = await prisma.user.findUnique({ where: { id: user.id } });
-      if (complaint.category.department_id !== staff?.department_id) return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+      if (staff?.department_id !== null && complaint.category.department_id !== staff?.department_id) {
+        return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+      }
       
       let assignToId = assigned_to;
       // If frontend sent the hardcoded demo ID or none at all, find a real field staff

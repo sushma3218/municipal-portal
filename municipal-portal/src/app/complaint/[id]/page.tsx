@@ -79,9 +79,9 @@ export default function ComplaintDetail({ params }: { params: Promise<{ id: stri
 
   const canForward = user?.role === 'RECEIVING_OFFICER' && complaint.status === 'SUBMITTED';
   const canAssign = user?.role === 'DEPT_HEAD' && (complaint.status === 'FORWARDED' || complaint.status === 'SUBMITTED');
-  const canStartWork = ['FIELD_STAFF', 'DEPT_HEAD', 'ADMIN'].includes(user?.role) && complaint.status === 'ASSIGNED';
-  const canSubmitEvidence = ['FIELD_STAFF', 'DEPT_HEAD', 'ADMIN'].includes(user?.role) && complaint.status === 'IN_PROGRESS';
-  const canMessage = ['FIELD_STAFF', 'DEPT_HEAD', 'ADMIN'].includes(user?.role) && (complaint.status === 'ASSIGNED' || complaint.status === 'IN_PROGRESS');
+  const canStartWork = ['FIELD_STAFF', 'ADMIN'].includes(user?.role) && complaint.status === 'ASSIGNED';
+  const canSubmitEvidence = ['FIELD_STAFF', 'ADMIN'].includes(user?.role) && complaint.status === 'IN_PROGRESS';
+  const canMessage = ['FIELD_STAFF', 'ADMIN'].includes(user?.role) && (complaint.status === 'ASSIGNED' || complaint.status === 'IN_PROGRESS');
   const canVerify = user?.role === 'DEPT_HEAD' && complaint.status === 'EVIDENCE_SUBMITTED';
   const canCitizenApprove = user?.role === 'CITIZEN' && complaint.status === 'CITIZEN_VERIFICATION';
 

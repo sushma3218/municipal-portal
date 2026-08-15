@@ -7,11 +7,11 @@ async function main() {
   
   const dept = depts[0];
   await prisma.user.updateMany({ 
-    where: { role: 'DEPT_HEAD' }, 
-    data: { department_id: dept.id } 
+    where: { role: { in: ['DEPT_HEAD', 'FIELD_STAFF'] } }, 
+    data: { department_id: null } 
   });
   
-  console.log('Assigned DEPT_HEADs to ' + dept.name);
+  console.log('Unassigned DEPT_HEADs and FIELD_STAFFs for global view');
 }
 
 main()
