@@ -1,0 +1,116 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String       @id @default(uuid())
+  name          String
+  email         String       @unique
+  password_hash String
+  phone         String?
+  role          String       // CITIZEN, RECEIVING_OFFICER, DEPT_HEAD, FIELD_STAFF, ADMIN
+  
+  department_id String?
+  department    Department?  @relation("DepartmentStaff", fields: [department_id], references: [id])
+
+  managed_department Department? @relation("DepartmentHead")
+
+  complaints_filed  Complaint[] @relation("CitizenComplaints")
+  complaints_assigned Complaint[] @relation("AssignedComplaints")
+
+  media_uploaded    ComplaintMedia[]
+  audit_logs        AuditLog[]
+}
+
+model Department {
+  id       String  @id @default(uuid())
+  name     String
+  head_id  String? @unique
+  head     User?   @relation("DepartmentHead", fields: [head_id], references: [id])
+
+  staff    User[]  @relation("DepartmentStaff")
+  categories Category[]
+}
+
+model Category {
+  id            String      @id @default(uuid())
+  name          String
+  department_id String
+  department    Department  @relation(fields: [department_id], references: [id])
+  sla_hours     Int
+  
+  complaints    Complaint[]
+}
+
+model Complaint {
+  id            String    @id
+  citizen_id    String
+  citizen       User      @relation("CitizenComplaints", fields: [citizen_id], references: [id])
+  
+  category_id   String
+  category      Category  @relation(fields: [category_id], references: [id])
+  
+  description   String
+  location_text String
+  lat           Float?
+  lng           Float?
+  ward          String?
+  
+  priority      String    // LOW, MEDIUM, HIGH, CRITICAL
+  status        String    // SUBMITTED, RECEIVED, VALIDATED, FORWARDED, ASSIGNED, IN_PROGRESS, WORK_COMPLETED, EVIDENCE_SUBMITTED, VERIFICATION, CITIZEN_VERIFICATION, CLOSED, REOPENED, REJECTED
+  
+  assigned_to   String?
+  assignee      User?     @relation("AssignedComplaints", fields: [assigned_to], references: [id])
+  
+  deadline      DateTime?
+  
+  staff_visit_date DateTime?
+  staff_contact    String?
+  staff_message    String?
+  resolved_at      DateTime?
+  dept_warning     String?
+  
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+
+  media         ComplaintMedia[]
+  audit_logs    AuditLog[]
+}
+
+model ComplaintMedia {
+  id           String    @id @default(uuid())
+  complaint_id String
+  complaint    Complaint @relation(fields: [complaint_id], references: [id])
+  
+  type         String    // BEFORE, AFTER
+  url          String
+  
+  uploaded_by  String
+  uploader     User      @relation(fields: [uploaded_by], references: [id])
+  
+  created_at   DateTime  @default(now())
+}
+
+model AuditLog {
+  id              String    @id @default(uuid())
+  complaint_id    String
+  complaint       Complaint @relation(fields: [complaint_id], references: [id])
+  
+  actor_id        String
+  actor           User      @relation(fields: [actor_id], references: [id])
+  
+  previous_status String?
+  new_status      String
+  
+  action          String
+  remarks         String?
+  timestamp       DateTime  @default(now())
+}
