@@ -1,0 +1,10 @@
+{
+  "build": {
+    "env": {
+      "DATABASE_URL": "file:./dev.db"
+    }
+  },
+  "env": {
+    "DATABASE_URL": "file:./dev.db"
+  }
+}
