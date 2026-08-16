@@ -98,9 +98,8 @@ export async function GET(req: Request) {
       const staffInfo = await prisma.user.findUnique({ where: { id: user.id } });
       if (user.role === 'DEPT_HEAD') {
         if (!staffInfo?.department_id) {
-          // Fallback: If Dept Head has no department assigned, show them all pending issues for MVP.
+          // Fallback: If Dept Head has no department assigned, show them all issues for MVP.
           complaints = await prisma.complaint.findMany({
-            where: { status: { in: ['SUBMITTED', 'FORWARDED', 'EVIDENCE_SUBMITTED'] } },
             include: { category: true, assignee: { select: { name: true } }, citizen: { select: { name: true, phone: true } }, media: true },
             orderBy: { created_at: 'desc' }
           });
