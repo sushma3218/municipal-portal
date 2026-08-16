@@ -11,7 +11,7 @@ export async function GET(req: Request) {
     if (user.role === 'DEPT_HEAD') {
       const staffInfo = await prisma.user.findUnique({ where: { id: user.id } });
       if (!staffInfo?.department_id) {
-        whereClause = { id: 'invalid-dept-id-fallback' };
+        whereClause = {}; // MVP Fallback: if no dept assigned, show all stats
       } else {
         whereClause = { category: { is: { department_id: staffInfo.department_id } } };
       }
