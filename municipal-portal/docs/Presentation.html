@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NagarMitra Presentation</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; }
+        .slide { background-color: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 80%; max-width: 800px; padding: 40px; margin: 20px 0; text-align: center; }
+        h1 { color: #1a56db; font-size: 2.5em; margin-bottom: 0.5em; }
+        h2 { color: #374151; font-size: 2em; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; margin-bottom: 20px; }
+        p, ul { color: #4b5563; font-size: 1.2em; line-height: 1.6; text-align: left; }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 10px; }
+        .footer { margin-top: 40px; color: #9ca3af; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+
+    <div class="slide">
+        <h1>NagarMitra</h1>
+        <p style="text-align: center; font-size: 1.5em; color: #6b7280;">Public Grievance Management System</p>
+        <p style="text-align: center;">AI-Powered QA Automation & Engineering Assessment</p>
+    </div>
+
+    <div class="slide">
+        <h2>The Problem</h2>
+        <ul>
+            <li>Citizens lacked a streamlined, transparent way to report municipal issues (e.g., potholes, broken streetlights).</li>
+            <li>Municipal staff struggled to track, assign, and resolve these grievances efficiently.</li>
+            <li>Lack of clear role separation led to administrative overhead and delayed resolutions.</li>
+        </ul>
+    </div>
+
+    <div class="slide">
+        <h2>The Approach</h2>
+        <ul>
+            <li><strong>Technology Stack:</strong> Built a modern web application using Next.js, React, Tailwind CSS, and Prisma (LibSQL/PostgreSQL).</li>
+            <li><strong>Role-Based Access Control:</strong> Designed separate portals for Citizens (to submit/track) and Corporation Staff (to manage/resolve).</li>
+            <li><strong>AI-Driven Development:</strong> Utilized AI tooling for rapid prototyping, generating automated test scripts, and executing the build-test-fix loop.</li>
+        </ul>
+    </div>
+
+    <div class="slide">
+        <h2>The Solution</h2>
+        <ul>
+            <li><strong>Functional Portal:</strong> Live web app deployed on Vercel with seamless user registration and login.</li>
+            <li><strong>Grievance Tracking:</strong> Citizens can submit complaints with photo evidence; staff can view assigned tasks and update statuses.</li>
+            <li><strong>Quality Assurance:</strong> Comprehensive test suite covering normal paths and edge cases, ensuring robust validation (e.g., preventing empty submissions or role mismatch).</li>
+        </ul>
+    </div>
+
+    <div class="slide">
+        <h2>Live Demo & Next Steps</h2>
+        <p style="text-align: center;">The application is live and fully functional.</p>
+        <p style="text-align: center;"><a href="https://municipal-portal-two.vercel.app/" target="_blank" style="color: #1a56db; font-weight: bold; text-decoration: none;">View Live Demo: municipal-portal-two.vercel.app</a></p>
+        <div class="footer">Please refer to the recorded video for a walkthrough of the code and live demonstration.</div>
+    </div>
+
+</body>
+</html>
