@@ -10,11 +10,18 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json();
-    const { category_id, description, location_text, lat, lng, ward, priority, photo_url } = body;
+    const { category_id, description, location_text, lat, lng, ward, priority, photo_url, phone } = body;
 
     // FIX: Restored `!description` check
     if (!category_id || !description || !location_text) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+    }
+
+    if (phone) {
+      await prisma.user.update({
+        where: { id: user.id },
+        data: { phone }
+      });
     }
 
     // Generate a unique complaint ID like CMP-2026-XXXX

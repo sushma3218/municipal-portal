@@ -12,6 +12,7 @@ export default function NewComplaint() {
     category_id: '',
     description: '',
     location_text: '',
+    phone: '',
     photo_url: '', // will be filled with base64 or left empty
   });
   const [error, setError] = useState('');
@@ -90,6 +91,11 @@ export default function NewComplaint() {
           <div>
             <Label>Location / Landmark</Label>
             <Input required placeholder="e.g. Near Central Park Gate 2" value={formData.location_text} onChange={e => setFormData({...formData, location_text: e.target.value})} />
+          </div>
+
+          <div>
+            <Label>Contact Phone Number</Label>
+            <Input placeholder="Enter phone number (optional)" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} />
           </div>
 
           <div>
