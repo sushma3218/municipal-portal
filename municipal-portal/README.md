@@ -61,7 +61,7 @@ NagarMitra is a modern, comprehensive Public Grievance Management System built t
    npm run dev
    ```
 
-6. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+6. Open [(https://municipal-portal-two.vercel.app/)] with your browser to see the result.
 
 ## License
 This project is for demonstration and developmental purposes.
