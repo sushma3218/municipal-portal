@@ -95,7 +95,7 @@ export default function NewComplaint() {
 
           <div>
             <Label>Contact Phone Number</Label>
-            <Input placeholder="Enter phone number (optional)" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} />
+            <Input required placeholder="Enter phone number" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} />
           </div>
 
           <div>
