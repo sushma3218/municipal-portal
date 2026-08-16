@@ -2,6 +2,11 @@
 
 NagarMitra is a modern, comprehensive Public Grievance Management System built to bridge the gap between citizens and municipal authorities. It provides an intuitive platform for citizens to report civic issues and for municipal staff to efficiently track, manage, and resolve them.
 
+## Live Demo & Video Demonstration
+
+- **Live Portal**: [https://municipal-portal-two.vercel.app/](https://municipal-portal-two.vercel.app/)
+- **Note on Video Demonstration**: The demonstration videos showing the full application workflow (Citizen -> Receiving Officer -> Dept Head -> Field Staff -> Admin) are included in this repository. Due to the large file size, please download the videos locally to view them smoothly.
+
 ## Key Features
 
 - **Role-Based Access Control (RBAC)**: Distinct interfaces and permissions for Citizens, Receiving Officers, Department Heads, Field Staff, and Administrators.
