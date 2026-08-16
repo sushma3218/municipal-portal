@@ -5,7 +5,7 @@ import { signToken } from '@/lib/auth';
 
 export async function POST(req: Request) {
   try {
-    const { email, password } = await req.json();
+    const { email, password, role } = await req.json();
 
     if (!email || !password) {
       return NextResponse.json({ error: 'Missing credentials' }, { status: 400 });
@@ -14,6 +14,10 @@ export async function POST(req: Request) {
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) {
       return NextResponse.json({ error: 'Invalid email or password' }, { status: 401 });
+    }
+
+    if (role && user.role !== role) {
+      return NextResponse.json({ error: 'Invalid role selected for this account' }, { status: 403 });
     }
 
     const validPassword = await bcrypt.compare(password, user.password_hash);
