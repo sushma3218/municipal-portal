@@ -79,9 +79,9 @@ export default function ComplaintDetail({ params }: { params: Promise<{ id: stri
 
   const canForward = user?.role === 'RECEIVING_OFFICER' && complaint.status === 'SUBMITTED';
   const canAssign = user?.role === 'DEPT_HEAD' && (complaint.status === 'FORWARDED' || complaint.status === 'SUBMITTED');
-  const canStartWork = ['FIELD_STAFF', 'ADMIN'].includes(user?.role) && complaint.status === 'ASSIGNED';
-  const canSubmitEvidence = ['FIELD_STAFF', 'ADMIN'].includes(user?.role) && complaint.status === 'IN_PROGRESS';
-  const canMessage = ['FIELD_STAFF', 'ADMIN'].includes(user?.role) && (complaint.status === 'ASSIGNED' || complaint.status === 'IN_PROGRESS');
+  const canStartWork = user?.role === 'FIELD_STAFF' && complaint.status === 'ASSIGNED';
+  const canSubmitEvidence = user?.role === 'FIELD_STAFF' && complaint.status === 'IN_PROGRESS';
+  const canMessage = user?.role === 'FIELD_STAFF' && (complaint.status === 'ASSIGNED' || complaint.status === 'IN_PROGRESS');
   const canVerify = user?.role === 'DEPT_HEAD' && complaint.status === 'EVIDENCE_SUBMITTED';
   const canCitizenApprove = user?.role === 'CITIZEN' && complaint.status === 'CITIZEN_VERIFICATION';
 
@@ -283,20 +283,22 @@ export default function ComplaintDetail({ params }: { params: Promise<{ id: stri
             )}
           </div>
 
-        <div className="bg-white p-6 rounded shadow border border-gray-100 self-start">
-          <h2 className="text-lg font-bold mb-4">Audit Trail</h2>
-          <div className="space-y-4">
-            {complaint.audit_logs.map((log: any) => (
-              <div key={log.id} className="relative pl-4 border-l-2 border-[var(--primary)] pb-4 last:pb-0">
-                <div className="absolute w-2 h-2 bg-[var(--primary)] rounded-full -left-[5px] top-1"></div>
-                <div className="text-xs text-gray-500 mb-1">{new Date(log.timestamp).toLocaleString()}</div>
-                <div className="font-bold text-sm">{log.action}</div>
-                <div className="text-xs text-gray-600 mt-1">{log.remarks}</div>
-                <div className="text-xs text-gray-400 mt-1">by {log.actor?.name} ({log.actor?.role})</div>
-              </div>
-            ))}
+        {(user?.role === 'DEPT_HEAD' || user?.role === 'ADMIN') && (
+          <div className="bg-white p-6 rounded shadow border border-gray-100 self-start">
+            <h2 className="text-lg font-bold mb-4">Audit Trail</h2>
+            <div className="space-y-4">
+              {complaint.audit_logs.map((log: any) => (
+                <div key={log.id} className="relative pl-4 border-l-2 border-[var(--primary)] pb-4 last:pb-0">
+                  <div className="absolute w-2 h-2 bg-[var(--primary)] rounded-full -left-[5px] top-1"></div>
+                  <div className="text-xs text-gray-500 mb-1">{new Date(log.timestamp).toLocaleString()}</div>
+                  <div className="font-bold text-sm">{log.action}</div>
+                  <div className="text-xs text-gray-600 mt-1">{log.remarks}</div>
+                  <div className="text-xs text-gray-400 mt-1">by {log.actor?.name} ({log.actor?.role})</div>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
       </div>
     </Layout>
