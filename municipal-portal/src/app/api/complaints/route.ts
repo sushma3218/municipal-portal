@@ -84,7 +84,7 @@ export async function GET(req: Request) {
     } else if (user.role === 'RECEIVING_OFFICER') {
       complaints = await prisma.complaint.findMany({
         where: { status: { in: ['SUBMITTED', 'RECEIVED'] } },
-        include: { category: { include: { department: true } }, citizen: { select: { name: true } }, media: true },
+        include: { category: { include: { department: true } }, citizen: { select: { name: true, phone: true } }, media: true },
         orderBy: { created_at: 'desc' }
       });
     } else if (user.role === 'DEPT_HEAD' || user.role === 'FIELD_STAFF') {
@@ -94,26 +94,26 @@ export async function GET(req: Request) {
           // Fallback: If Dept Head has no department assigned, show them all pending issues for MVP.
           complaints = await prisma.complaint.findMany({
             where: { status: { in: ['SUBMITTED', 'FORWARDED', 'EVIDENCE_SUBMITTED'] } },
-            include: { category: true, assignee: { select: { name: true } }, media: true },
+            include: { category: true, assignee: { select: { name: true } }, citizen: { select: { name: true, phone: true } }, media: true },
             orderBy: { created_at: 'desc' }
           });
         } else {
           complaints = await prisma.complaint.findMany({
             where: { category: { is: { department_id: staffInfo.department_id } } },
-            include: { category: true, assignee: { select: { name: true } }, media: true },
+            include: { category: true, assignee: { select: { name: true } }, citizen: { select: { name: true, phone: true } }, media: true },
             orderBy: { created_at: 'desc' }
           });
         }
       } else {
         complaints = await prisma.complaint.findMany({
           where: { assigned_to: user.id },
-          include: { category: true, media: true },
+          include: { category: true, citizen: { select: { name: true, phone: true } }, media: true },
           orderBy: { created_at: 'desc' }
         });
       }
     } else if (user.role === 'ADMIN') {
       complaints = await prisma.complaint.findMany({
-        include: { category: { include: { department: true } }, citizen: { select: { name: true } }, assignee: { select: { name: true } }, media: true },
+        include: { category: { include: { department: true } }, citizen: { select: { name: true, phone: true } }, assignee: { select: { name: true } }, media: true },
         orderBy: { created_at: 'desc' }
       });
     } else {

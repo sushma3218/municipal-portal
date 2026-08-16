@@ -55,6 +55,7 @@ export default function AdminDashboard() {
             <tr className="bg-gray-100 text-sm font-bold border-b border-gray-200">
               <th className="p-4">ID</th>
               <th className="p-4 w-20">Photo</th>
+              <th className="p-4">Citizen</th>
               <th className="p-4">Category</th>
               <th className="p-4">Location</th>
               <th className="p-4">Priority</th>
@@ -72,6 +73,14 @@ export default function AdminDashboard() {
                   ) : (
                     <div className="w-12 h-12 bg-gray-100 flex items-center justify-center text-xs text-gray-400 rounded border border-gray-200">No Img</div>
                   )}
+                </td>
+                <td className="p-4">
+                  {c.citizen ? (
+                    <div>
+                      <div className="font-bold">{c.citizen.name}</div>
+                      {c.citizen.phone && <div className="text-xs text-gray-500">{c.citizen.phone}</div>}
+                    </div>
+                  ) : <span className="text-gray-400">N/A</span>}
                 </td>
                 <td className="p-4">{c.category?.name}</td>
                 <td className="p-4 text-sm text-gray-600">{c.location_text}</td>
@@ -93,7 +102,7 @@ export default function AdminDashboard() {
               </tr>
             ))}
             {complaints.length === 0 && (
-              <tr><td colSpan={7} className="p-4 text-center text-gray-500">No complaints found.</td></tr>
+              <tr><td colSpan={8} className="p-4 text-center text-gray-500">No complaints found.</td></tr>
             )}
           </tbody>
         </table>
